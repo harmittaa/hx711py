@@ -2,13 +2,15 @@
 
 import time
 import sys
+
+EMULATE_HX711=False
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
     from hx711 import HX711
 else:
     from emulated_hx711 import HX711
 
-EMULATE_HX711=False
+
 referenceUnit = 1
 hx = HX711(5, 6)
 
@@ -66,7 +68,7 @@ def poll(callback):
             # print binary_string + " " + np_arr8_string
             
             # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
-            max(0, hx.get_weight(5))
+            val = max(0, hx.get_weight(5))
             print(val)
             callback(val)
 
