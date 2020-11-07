@@ -2,10 +2,15 @@
 
 import time
 import sys
+if not EMULATE_HX711:
+    import RPi.GPIO as GPIO
+    from hx711 import HX711
+else:
+    from emulated_hx711 import HX711
 
 EMULATE_HX711=False
-
 referenceUnit = 1
+hx = HX711(5, 6)
 
 def cleanAndExit():
     print("Cleaning...")
@@ -18,15 +23,10 @@ def cleanAndExit():
 
 
 def main():
-    if not EMULATE_HX711:
-        import RPi.GPIO as GPIO
-        from hx711 import HX711
-    else:
-        from emulated_hx711 import HX711
+    print("Main of example.py")
 
 
 def poll(callback):
-    hx = HX711(5, 6)
 
     # I've found out that, for some reason, the order of the bytes is not always the same between versions of python, numpy and the hx711 itself.
     # Still need to figure out why does it change.
